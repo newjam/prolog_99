@@ -35,21 +35,57 @@ palindrome(XS) :- my_reverse(XS, XS).
 % P26 Combinations.
 :- op(450, xfy, [∧]).
 :- op(475, xfy, [∨]).
-:- op(500, xfy, [∈]).
+:- op(500, xfy, [∈, ∉]).
 :- op(550, xfy, [⊆]).
 :- op(600, xfy, [→]).
 
-X ∈ [X|_].
-X ∈ [_|Xs] :- X ∈ Xs.
+%X ∈ [X|_].
+%X ∈ [_|Xs] :- X ∈ Xs.
+
+X ∈ A :- member(X, A).
+
+%_ ∉ [].
+%X ∉ [Y|A] :- X ∉ A, X \= Y.
+
+X ∉ A :- \+ member(X, A).
 
 P ∨ _ :- P.
 _ ∨ Q :- Q.
 
 P ∧ Q :- P, Q.
 
-P → Q :- \+ (P ∧ (\+ Q)).
+P → Q :- \+ (P, \+ Q), !.
+
+%P → Q :- (\+ P ; Q) , !.
+
+%P → Q :- P, Q, !.
+%P → _ :- \+ P, ! .
+
+%P → Q :- \+ P, Q, !.
+%P → Q :- \+ P, \+ Q, !.
+%P → Q :- P   , Q .
+
+%_ → Q :- Q, !.
 
 A ⊆ B :- X ∈ A → X ∈ B.
+
+%A ⊆ B :- X ∉ A, X ∈ B, !.
+%A ⊆ B :- X ∈ A, X ∈ B.
+
+%[X|A] ⊆ [Y|B] :- X ∉ A, Y ∉ B, X ∈ [Y|B], A ⊆ B.
+
+%   [] ⊆ _.
+%[X|A] ⊆ B :- X ∉ A, X ∈ B, A ⊆ B.
+
+%[] ⊆ _.
+
+%[] ⊆ _.
+%A ⊆ B :- A ⊆ B,  B ⊆ C.
+
+% A =:= B :- A ⊆ B, B ⊆ A.
+
+
+% 
 
 %implies(P, _) :- \+ P.
 %implies(P, Q) :- P, Q.
