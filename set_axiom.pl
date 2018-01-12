@@ -34,14 +34,14 @@ P ↔ Q :- P → Q, Q → P.
 
 % axiom of extensionality
 %eq(X, Y) :- Z ∈ X ↔ Z ∈ Y.
-X ∈ W ↔ Y ∈ W :- Z ∈ X ↔ Z ∈ Y.
+set(W) :- Z ∈ X ↔ Z ∈ Y, X ∈ W ↔ Y ∈ W.
 
 %eq(X, Y) :- X ∈ W ↔ Y ∈ W.
 
-X ∈ 
+%X ∈ 
 
 % Unordered Pair Axiom
-X ∈ C ∨ Y ∈ C :- set(X), set(Y), set(C).
+set(C) :- set(X), set(Y), X ∈ C ∨ Y ∈ C.
 
 A ⊆ B :- X ∈ A → X ∈ B, set(A), set(B).
 
