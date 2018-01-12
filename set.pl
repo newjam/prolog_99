@@ -11,11 +11,11 @@ X ∈ A :- member(X, A).
 X ∉ A :- forall(Y ∈ A, X \= Y).
 
 % more like sublist than subset.
-%[]    ⊆ _.
-%[X|A] ⊆ B :- A ⊆ B, X ∈ B, X ∉ A. 
+[]    ⊆ _.
+[X|A] ⊆ B :- A ⊆ B, X ∈ B, X ∉ A. 
 
 
-A ⊆ B :- forall(X ∈ A , X ∈ B).
+% A ⊆ B :- forall(X ∈ A , X ∈ B).
 
 % not really a k-combination more like a k-permutation
 combination(C, K, A) :- length(A, N),
