@@ -2,20 +2,65 @@ use_module(library(clpfd)).
 
 :- op(500, xfy, [∈, ∉]).
 :- op(550, xfy, [⊆]).
+:- op(600, xfy, [→]).
 
 %X ∈ [X|_].
 %X ∈ [_|Xs] :- X ∈ Xs.
 
-X ∈ A :- member(X, A).
+/*
+a ∈ s.
+b ∈ s.
+c ∈ s.
 
+a ∈ t.
+b ∈ t.
+*/
+
+/*
+ pair axiom. there is a set containing x and y.
+ union. there is a set with all the elements from two sets
+*/
+
+/* intersection */
+/*X ∈ T :- X ∈ R, X ∈ S.*/
+
+
+X ∈ A :- member(X, A).
 X ∉ A :- forall(Y ∈ A, X \= Y).
 
-% more like sublist than subset.
+/* more like sublist than subset.*/
+
 []    ⊆ _.
 [X|A] ⊆ B :- A ⊆ B, X ∈ B, X ∉ A. 
 
+/*
+% does not halt for X ⊆ [a, b, c] 
+% P → Q :- \+ (P, \+ Q).
+
+P → Q :- (\+ P ; Q) , !.
+
+
+% P → Q :- P, Q, !.
+% P → _ :- \+ P, ! .
+
+% P → Q :- \+ P, Q, !.
+% P → Q :- \+ P, \+ Q, !.
+% P → Q :- P   , Q .
+
+%_ → Q :- Q, !.
+
+
+A ⊆ B :- X ∈ A → X ∈ B.
+*/
+
+%size(S, 0)     :- X ∉ S.
+%size(S, N + 1) :- X ∈ S, size(T, N), X ∉ T.
 
 % A ⊆ B :- forall(X ∈ A , X ∈ B).
+
+% A ⊆ B :- X ∈ B, X ∈ A.
+% A ⊆ B :- X ∈ B, X ∉ A.
+% A ⊆ B :- X ∉ A, X ∉ B.
 
 % not really a k-combination more like a k-permutation
 combination(C, K, A) :- length(A, N),
@@ -60,20 +105,6 @@ subset_valid :- [] ⊆ [a, b, c],
 %_ ∨ Q :- Q.
 
 %P ∧ Q :- P, Q.
-
-% doesn't halt for X ⊆ [a, b, c] 
-%P → Q :- \+ (P, \+ Q).
-
-%P → Q :- (\+ P ; Q) , !.
-
-%P → Q :- P, Q, !.
-%P → _ :- \+ P, ! .
-
-%P → Q :- \+ P, Q, !.
-%P → Q :- \+ P, \+ Q, !.
-%P → Q :- P   , Q .
-
-%_ → Q :- Q, !.
 
 %A ⊆ B :- X ∈ A → X ∈ B.
 
